@@ -1,4 +1,4 @@
-## Python工具：可視化loss和命中率 ( A python tool for visualize loss and accuracy while training )
+## Python工具：可視化Loss和Accuracy. ( A python tool for visualize loss and accuracy while training )
 
 ### 1. 效果圖（How this look?）
 <img src="./img/demo.gif" height=530px width=508>
@@ -81,7 +81,7 @@ if batch%update_per_batches == 0:
 中文參數列表 :
 | input參數   |      說明      |
 |:----------:|:-------------|
-| accs   |  將紀錄命中率的list傳入 |
+| accs   |  將紀錄準確率的list傳入 |
 | losses   |  將紀錄loss值的list傳入 |
 | show_this   |  這次的數值要不要顯示 |
 | mode   |  訓練還是測試 |
@@ -108,7 +108,7 @@ English table:
 ### 目前測試環境：
  &#9745; Windows10  
  &#9745; macOS  
- &#9744; Linux
+ &#9744; Linux  
 - - - -
 Author : NTNU AIoT Lab.  
 Email: ntnuchou141253@gmail.com
