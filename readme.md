@@ -1,4 +1,4 @@
-## Python工具：可視化loss和命中率 ( A python tool for visualize loss and accuracy while trainin )
+## Python工具：可視化loss和命中率 ( A python tool for visualize loss and accuracy while training )
 
 ### 1. 效果圖（How this look?）
 <img src="./img/demo.gif" height=530px width=508>
