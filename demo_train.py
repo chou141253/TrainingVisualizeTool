@@ -44,15 +44,15 @@ def traing(epoch, model, dataloader, optimizer, criterion, training_info, canvas
             # for record
             _, predicted = torch.max(outs.data, 1)
             correct = (predicted == labels).sum().item()
-            accs["train"].append(correct/batch_size)
+            accs["train"].append(100*correct/batch_size)
             losses["train"].append(loss.data.item())
             # for visualize
             if batch%(update_every_batches*5) == 0:
                 show_val = True
             else:
                 show_val = False
-            canvas.updating(acc=accs["train"][-2:], 
-                            loss=losses["train"][-2:], 
+            canvas.updating(accs=accs["train"], 
+                            losses=losses["train"], 
                             show_this=show_val, mode='train')
 
 
@@ -76,8 +76,7 @@ def test(epoch, model, dataloader, criterion, training_info, canvas):
     # for record
     accs["test"].append(test_acc)
     losses["test"].append(test_avg_loss)
-    canvas.updating(acc=accs["test"][-2:], 
-                    loss=losses["test"][-2:], 
+    canvas.updating(accs=accs["test"], 
                     show_this=True, mode='test')
 
 def program_exit():
@@ -97,7 +96,7 @@ if __name__ == "__main__":
 
     batch_size = int(training_info['batch_size'])
     num_workers = int(training_info['num_workers'])
-    update_every_batches = int(training_info['update_every_batches'])
+    update_every_batches = int(training_info['update_per_batches'])
     total_epoches = int(training_info['total_epoches'])
 
     # Training a cifar10 model,
@@ -139,14 +138,14 @@ if __name__ == "__main__":
     canvas = WebRenderer(port=12345,
                          batch_size=batch_size,
                          sample_nums=len(trainloader.dataset), 
-                         update_every_batches=update_every_batches, 
+                         update_per_batches=update_every_batches, 
                          total_epoches=total_epoches, 
                          mode='auto', 
                          blank_size=70, 
-                         epoch_pixel=20, 
-                         max_vis_loss=6.4,
+                         epoch_pixel=30, 
+                         max_vis_loss=7.6,
                          canvas_h=500,
-                         x_ruler=4,
+                         x_ruler=5,
                          y_ruler=2)
 
     canvas_t = threading.Thread(target=canvas.start)

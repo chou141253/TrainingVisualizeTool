@@ -21,7 +21,7 @@ class WebRenderer(object):
                  port,
                  batch_size,
                  sample_nums, 
-                 update_every_batches, 
+                 update_per_batches, 
                  total_epoches=90, 
                  mode='auto', 
                  blank_size=70, 
@@ -60,15 +60,15 @@ class WebRenderer(object):
 
         self.canvas = cv2plot.Canvas(batch_size,
                                      sample_nums, 
-                                     update_every_batches, 
-                                     total_epoches=90, 
-                                     mode='auto', 
-                                     blank_size=70, 
-                                     epoch_pixel=20, 
-                                     max_vis_loss=6.4,
-                                     canvas_h=500,
-                                     x_ruler=4,
-                                     y_ruler=2)
+                                     update_per_batches, 
+                                     total_epoches, 
+                                     mode, 
+                                     blank_size, 
+                                     epoch_pixel, 
+                                     max_vis_loss,
+                                     canvas_h,
+                                     x_ruler,
+                                     y_ruler)
         
         self.app = Flask(__name__)
         self.port = port
@@ -101,15 +101,32 @@ class WebRenderer(object):
         self.app.run(host="127.0.0.1", port=self.port, debug=True,
             threaded=True, use_reloader=False)
 
-    def updating(self, acc=None, loss=None, show_this=False, mode='train'):
-
+    def updating(self, accs=None, losses=None, show_this=False, mode='train'):
+        start_p = None
+        if accs is not None:
+            acc = accs[-2:]
+            start_p = max(len(accs)-2, 0)
+        if losses is not None:
+            loss = losses[-2:]
+            start_p = max(len(losses)-2, 0)
+        xtype = 'batch' if mode=='train' else 'epoch'
+        losses_color = (255,40,0) if mode=="train" else (255,0,30)
+        accs_color = (0,0,255) if mode=="train" else (70,20,148)
         with self.lock:
-            if len(acc) == 1:
-                self.canvas.plot_list(loss, [show_this], dot_color=(200,0,0))
-                self.canvas.plot_list(acc, [show_this], dot_color=(0,0,200))
-            elif len(acc) == 2:
-                self.canvas.plot_list(loss, [False, show_this], dot_color=(200,0,0))
-                self.canvas.plot_list(acc, [False, show_this], dot_color=(0,0,200))
+            if losses is not None:
+                if len(loss) == 1:
+                    self.canvas.plot_list(start_p, loss, [show_this], dot_color=losses_color,
+                                          xtype=xtype, ytype='loss')
+                elif len(loss) == 2:
+                    self.canvas.plot_list(start_p, loss, [False, show_this], dot_color=losses_color,
+                                          xtype=xtype, ytype='loss')
+            if accs is not None:
+                if len(acc) == 1:
+                     self.canvas.plot_list(start_p, acc, [show_this], dot_color=accs_color,
+                                           xtype=xtype, ytype='acc')
+                elif len(acc) == 2:
+                    self.canvas.plot_list(start_p, acc, [False, show_this], dot_color=accs_color,
+                                          xtype=xtype, ytype='acc')
 
             self.out_frame = self.canvas.background.copy()
 

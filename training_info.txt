@@ -9,7 +9,7 @@ shuffle = 1
 
 # About web render
 plot = 1
-update_every_batches = 100
+update_per_batches = 400
 save_plot_path = backup/
 
 # About model saving
