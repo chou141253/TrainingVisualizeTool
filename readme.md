@@ -105,6 +105,10 @@ English table:
 
 
 - - - -
-
+### 目前測試環境：
+ &#9745; Windows10  
+ &#9745; Mac  
+ &#9744; Linux
+- - - -
 Author : NTNU AIoT Lab.  
 Email: ntnuchou141253@gmail.com

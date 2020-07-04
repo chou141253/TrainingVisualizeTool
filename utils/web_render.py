@@ -111,7 +111,7 @@ class WebRenderer(object):
             start_p = max(len(losses)-2, 0)
         xtype = 'batch' if mode=='train' else 'epoch'
         losses_color = (255,40,0) if mode=="train" else (255,0,30)
-        accs_color = (0,0,255) if mode=="train" else (70,20,148)
+        accs_color = (0,0,255) if mode=="train" else (100,0,158)
         with self.lock:
             if losses is not None:
                 if len(loss) == 1:
