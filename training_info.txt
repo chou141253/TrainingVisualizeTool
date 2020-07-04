@@ -1,0 +1,16 @@
+# Train
+GPUs = 0
+total_epoches = 40
+
+# Dataloader
+batch_size = 32
+num_workers = 4
+shuffle = 1
+
+# About web render
+plot = 1
+update_every_batches = 100
+save_plot_path = backup/
+
+# About model saving
+save_model_path = backup/

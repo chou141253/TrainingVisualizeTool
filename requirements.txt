@@ -1,0 +1,4 @@
+python = 3.6.9
+opencv = 3.4.1 or 4.x.x
+flask = 1.1.2
+numpy = 1.17.4
